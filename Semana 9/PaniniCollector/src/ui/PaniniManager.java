@@ -127,10 +127,8 @@ public class PaniniManager {
 			System.out.println("Shirt number: ");
 			int shirtNumber = reader.nextInt();
 
-			reader.nextLine();
-			System.out.println(
-					"Type the position of the player");
-			String playerPosition = reader.nextLine();
+			System.out.println("Type the position of the player");
+			int playerPosition = reader.nextInt();
 
 			if (controller.registerPlayer(teamID, name, lastName, id, shirtNumber, playerPosition)) {
 				System.out.println("Player was successfully registered");
