@@ -4,16 +4,18 @@ public class Enemy {
     
     private String nameId;
     private TypeEnemy typeEnemy;
-    private int remainigPoints;
-    private int plusPoints;
+    private int decreasingPoints;
+    private int increasinPoints;
     private int positionX;
     private int positionY;
 
-    public Enemy(String nameId, TypeEnemy typeEnemy, int remainigPoints, int plusPoints, int positionX, int positionY) {
+    public Enemy(String nameId, TypeEnemy typeEnemy, int decreasingPoints, int increasinPoints, int positionX, int positionY) {
         this.nameId = nameId;
         this.typeEnemy = typeEnemy;
-        this.remainigPoints = remainigPoints;
-        this.plusPoints = plusPoints;
+        this.decreasingPoints
+ = decreasingPoints
+;
+        this.increasinPoints = increasinPoints;
         this.positionX = positionX;
         this.positionY = positionY;
     }
@@ -34,20 +36,23 @@ public class Enemy {
         this.typeEnemy = typeEnemy;
     }
 
-    public int getRemainigPoints() {
-        return remainigPoints;
+    public int getdecreasingPoints() {
+        return decreasingPoints
+;
     }
 
-    public void setRemainigPoints(int remainigPoints) {
-        this.remainigPoints = remainigPoints;
+    public void setdecreasingPoints(int decreasingPoints) {
+        this.decreasingPoints
+ = decreasingPoints
+;
     }
 
-    public int getPlusPoints() {
-        return plusPoints;
+    public int getincreasinPoints() {
+        return increasinPoints;
     }
 
-    public void setPlusPoints(int plusPoints) {
-        this.plusPoints = plusPoints;
+    public void setincreasinPoints(int increasinPoints) {
+        this.increasinPoints = increasinPoints;
     }
 
     public int getPositionX() {

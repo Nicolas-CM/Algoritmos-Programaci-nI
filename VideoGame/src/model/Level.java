@@ -4,12 +4,12 @@ public class Level {
 
     private int id;
     private int nextLevel;
-    private String difficult;
+    private Difficult difficult;
 
-    public Level(int id, int nextLevel, String difficult) {
+    public Level(int id, int nextLevel) {
         this.id = id;
         this.nextLevel = nextLevel;
-        this.difficult = difficult;
+        this.difficult = Difficult.values()[0];
     }
 
     public int getId() {
@@ -28,11 +28,11 @@ public class Level {
         this.nextLevel = nextLevel;
     }
 
-    public String getDifficult() {
+    public Difficult getDifficult() {
         return difficult;
     }
 
-    public void setDifficult(String difficult) {
+    public void setDifficult(Difficult difficult) {
         this.difficult = difficult;
     }
 
