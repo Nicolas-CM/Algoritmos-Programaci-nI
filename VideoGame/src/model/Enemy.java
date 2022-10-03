@@ -5,17 +5,15 @@ public class Enemy {
     private String nameId;
     private TypeEnemy typeEnemy;
     private int decreasingPoints;
-    private int increasinPoints;
+    private int increasingPoints;
     private int positionX;
     private int positionY;
 
-    public Enemy(String nameId, TypeEnemy typeEnemy, int decreasingPoints, int increasinPoints, int positionX, int positionY) {
+    public Enemy(String nameId, int typeEnemy, int decreasingPoints, int increasingPoints, int positionX, int positionY) {
         this.nameId = nameId;
-        this.typeEnemy = typeEnemy;
-        this.decreasingPoints
- = decreasingPoints
-;
-        this.increasinPoints = increasinPoints;
+        this.typeEnemy = TypeEnemy.values()[typeEnemy];
+        this.decreasingPoints = decreasingPoints;
+        this.increasingPoints = increasingPoints;
         this.positionX = positionX;
         this.positionY = positionY;
     }
@@ -47,12 +45,12 @@ public class Enemy {
 ;
     }
 
-    public int getincreasinPoints() {
-        return increasinPoints;
+    public int getincreasingPoints() {
+        return increasingPoints;
     }
 
-    public void setincreasinPoints(int increasinPoints) {
-        this.increasinPoints = increasinPoints;
+    public void setincreasingPoints(int increasingPoints) {
+        this.increasingPoints = increasingPoints;
     }
 
     public int getPositionX() {
@@ -71,5 +69,13 @@ public class Enemy {
         this.positionY = positionY;
     }
 
-    
+    public String toString() {
+        return "\n      Enemy info: "
+        + "\n       NameId: " + this.nameId
+        + "\n       Type of Enemy: " + this.typeEnemy
+        + "\n       Decreasing Points: " + this.decreasingPoints 
+        + "\n       Increasing Points: " + this.increasingPoints
+        + "\n       Position in X : " + this.positionX
+        + "\n       Position in Y: " + this.positionY;
+    }
 }

@@ -56,5 +56,12 @@ public class Treasure {
         this.positionY = positionY;
     }
 
-    
+    public String toString() {
+        return "\n      Treasure info: "
+        + "\n       Name: " + this.name
+        + "\n       Url: " + this.url
+        + "\n       Increasing Points: " + this.points
+        + "\n       Position in X : " + this.positionX
+        + "\n       Position in Y: " + this.positionY;
+    }
 }
