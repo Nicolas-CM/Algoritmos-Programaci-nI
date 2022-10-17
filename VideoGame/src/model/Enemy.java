@@ -40,9 +40,7 @@ public class Enemy {
     }
 
     public void setdecreasingPoints(int decreasingPoints) {
-        this.decreasingPoints
- = decreasingPoints
-;
+        this.decreasingPoints = decreasingPoints;
     }
 
     public int getincreasingPoints() {
@@ -69,8 +67,9 @@ public class Enemy {
         this.positionY = positionY;
     }
 
+    @Override
     public String toString() {
-        return "\n      Enemy info: "
+        return "\n  Enemy info: "
         + "\n       NameId: " + this.nameId
         + "\n       Type of Enemy: " + this.typeEnemy
         + "\n       Decreasing Points: " + this.decreasingPoints 

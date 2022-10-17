@@ -12,8 +12,8 @@ public class Level {
         this.id = id;
         this.nextLevel = nextLevel;
         this.difficult = Difficult.values()[0];
-        this.enemiesList = new Enemy[4];
-        this.treasuresList = new Treasure[5];
+        this.enemiesList = new Enemy[25];
+        this.treasuresList = new Treasure[50];
     }
 
     public int getId() {
@@ -36,8 +36,8 @@ public class Level {
         return difficult;
     }
 
-    public void setDifficult(Difficult difficult) {
-        this.difficult = difficult;
+    public void setDifficult(int difficult) {
+        this.difficult = Difficult.values()[difficult];
     }
 
     
@@ -57,25 +57,26 @@ public class Level {
         this.treasuresList = trasuresList;
     }
 
+    @Override
     public String toString() {
         String enemiesRegistered = "";
         for (int i = 0; i < enemiesList.length; i++) {
             if (enemiesList[i] != null) {
-                enemiesRegistered += enemiesList[i].toString();
+                enemiesRegistered += enemiesList[i].toString() + ",";
             }
         }
         String treasuresRegistered = "";
         for (int i = 0; i < treasuresList.length; i++) {
             if (treasuresList[i] != null) {
-                treasuresRegistered += treasuresList[i].toString();
+                treasuresRegistered += treasuresList[i].toString() + ",";
             }
         }
-        return "\n  Level info: "
+        return "\nLevel info: "
         + "\n    Id: " + this.id
         + "\n    NextLevel: " + this.nextLevel
         + "\n    Difficult: " + this.difficult
-        + "\n    Enemies: \n" + enemiesRegistered
-        + "\n    Treasures: \n" + treasuresRegistered;
+        + "\n\n    Enemies: --------------------\n" + enemiesRegistered
+        + "\n\n    Treasures: --------------------\n" + treasuresRegistered;
     }
 
     /**
@@ -109,7 +110,6 @@ public class Level {
         }
         return false;
     }
-
     /**
      * Description: This allows review if is full the list of enemies
      * @return boolean
@@ -122,7 +122,7 @@ public class Level {
         }
     }
     /**
-     * Description: This allows review if is full the list of enemies
+     * Description: This allows review if is full the list of treasures
      * @return boolean
      */
     public boolean reviewFullTreasures(){
@@ -133,7 +133,31 @@ public class Level {
         }
     }
 
+    /**
+     * Description: This allows get the total points of all the enemies of level
+     * @return int This is the total of points
+     */
+    public int totalPointsEnemies(){
+        int totalPointsEnemies = 0;
+        for (int i = 0; i < enemiesList.length; i++) {
+            if (enemiesList[i]!=null) {
+                totalPointsEnemies += enemiesList[i].getincreasingPoints();
+            }
+        }
+        return totalPointsEnemies;
+    }
 
-
-    
+    /**
+     * Description: This allows get the total points of all the diamonds of level
+     * @return int This is the total of points
+     */
+    public int totalPointsTreasures(){
+        int totalPointsTreasures = 0;
+        for (int i = 0; i < treasuresList.length; i++) {
+            if (treasuresList[i]!=null) {
+                totalPointsTreasures += treasuresList[i].getPoints();
+            }
+        }
+        return totalPointsTreasures;
+    }
 }

@@ -56,8 +56,9 @@ public class Treasure {
         this.positionY = positionY;
     }
 
+    @Override
     public String toString() {
-        return "\n      Treasure info: "
+        return "\n  Treasure info: "
         + "\n       Name: " + this.name
         + "\n       Url: " + this.url
         + "\n       Increasing Points: " + this.points

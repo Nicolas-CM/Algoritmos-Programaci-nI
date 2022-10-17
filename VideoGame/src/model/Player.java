@@ -49,16 +49,11 @@ public class Player {
 
     @Override
     public String toString() {
-        return "\n      Player info: "
-        + "\n       NickName: " + this.nickName
-        + "\n       Name: " + this.name
-        + "\n       score : " + this.score
-        + "\n       Life Number : " + this.lifeNumber
-        + "\n       Level: " + this.level.getId();
-    }
-    
-
-    
-
-    
+        return "\nPlayer info: "
+        + "\n   NickName: " + this.nickName
+        + "\n   Name: " + this.name
+        + "\n   score : " + this.score
+        + "\n   Life Number : " + this.lifeNumber
+        + "\n   Level: " + this.level.getId();
+    }     
 }
