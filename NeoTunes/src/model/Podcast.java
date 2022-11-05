@@ -1,13 +1,11 @@
 package model;
 
-import java.time.LocalTime;
-
 public class Podcast extends Audio {
     
     private String description;
     private TypeCategory typeCategory;
 
-    public Podcast(String name, String url, LocalTime duration, String description, int typeCategory) {
+    public Podcast(String name, String url, int duration, String description, int typeCategory) {
         super(name, url, duration);
         this.description = description;
         this.typeCategory = TypeCategory.values()[typeCategory];

@@ -1,27 +1,25 @@
 package model;
 
-import java.time.LocalTime;
-
 public abstract class Consumer extends User{
     
-    private LocalTime reproductionTime;
+    private int reproductionTime;
     private int[] mostListenedGenre;
     private int[] mostListenedArtist;
     private int[] mostListenedCreator;
 
     public Consumer(String nickName, String id) {
         super(nickName, id);
-        this.reproductionTime = LocalTime.of(0, 0, 0);
+        this.reproductionTime = 0;
         this.mostListenedGenre = new int[4];
         this.mostListenedArtist = new int[15];
         this.mostListenedCreator = new int[15];
     }
 
-    public LocalTime getReproductionTime() {
+    public int getReproductionTime() {
         return reproductionTime;
     }
 
-    public void setReproductionTime(LocalTime reproductionTime) {
+    public void setReproductionTime(int reproductionTime) {
         this.reproductionTime = reproductionTime;
     }
 

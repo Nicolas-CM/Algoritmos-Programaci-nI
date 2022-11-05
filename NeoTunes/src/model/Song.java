@@ -1,7 +1,6 @@
 package model;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class Song extends Audio {
 
@@ -11,12 +10,12 @@ public class Song extends Audio {
     private LocalDate buyDate;
     private TypeGenre typeGenre;
 
-    public Song(String name, String url, LocalTime duration, String album, double saleValue, int typeGenre) {
+    public Song(String name, String url, int duration, String album, double saleValue, int typeGenre) {
         super(name, url, duration);
         this.album = album;
         this.saleValue = saleValue;
         this.amountSale = 0;
-        this.buyDate = LocalDate.now();
+        this.buyDate = null;
         this.typeGenre = TypeGenre.values()[typeGenre];
     }
 

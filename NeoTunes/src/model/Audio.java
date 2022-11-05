@@ -1,15 +1,13 @@
 package model;
 
-import java.time.LocalTime;
-
 public abstract class Audio {
     
     private String name;
     private String url;
-    private LocalTime duration;
+    private int duration;
     private int numberReproduction;
 
-    public Audio(String name, String url, LocalTime duration) {
+    public Audio(String name, String url, int duration) {
         this.name = name;
         this.url = url;
         this.duration = duration;
@@ -32,11 +30,11 @@ public abstract class Audio {
         this.url = url;
     }
 
-    public LocalTime getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(LocalTime duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
