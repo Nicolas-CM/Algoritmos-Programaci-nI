@@ -5,10 +5,20 @@ import java.util.ArrayList;
 public class Premium extends Consumer {
 
     private ArrayList<Playlist> playlist;
+    private ArrayList<Invoice> invoices;
 
     public Premium(String nickName, String id) {
         super(nickName, id);
         this.playlist = new ArrayList<Playlist>();
+        this.invoices = new ArrayList<Invoice>();
+    }
+
+    public ArrayList<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(ArrayList<Invoice> invoices) {
+        this.invoices = invoices;
     }
 
     public ArrayList<Playlist> getPlaylist() {
@@ -17,6 +27,10 @@ public class Premium extends Consumer {
 
     public void setPlaylist(ArrayList<Playlist> playlist) {
         this.playlist = playlist;
+    }
+
+    public boolean addInvoice(Invoice invoice){
+        return this.invoices.add(invoice);
     }
 
     /**

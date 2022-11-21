@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class NeoTunesController {
 
@@ -10,6 +11,7 @@ public class NeoTunesController {
     public NeoTunesController() {
         this.users = new ArrayList<User>();
         this.audios = new ArrayList<Audio>();
+
     }
 
     public ArrayList<Audio> getAudios() {
@@ -150,7 +152,7 @@ public class NeoTunesController {
      *                                           3-Artist : 4-Creator)
      * @return String The list of the nickNames
      */
-    public String   showNickName(int standardOrPremiumOrArtistOrCreator) {
+    public String showNickName(int standardOrPremiumOrArtistOrCreator) {
         String msg = "";
         for (int i = 0; i < users.size(); i++) {
             if (!users.isEmpty()) {
@@ -372,5 +374,374 @@ public class NeoTunesController {
             ((Premium) users.get(numberUser)).getPlaylist().get(numberPlaylist).setName(newName);
             return true;
         }
+    }
+
+    /**
+     * Description: Generate the Auto-id for share
+     * 
+     * @param numberUser     The User that want share a Playlist
+     * @param numberPlaylist The Playlist that will be share
+     * @return The Auto-id
+     */
+    public String sharePlaylist(int numberUser, int numberPlaylist) {
+        String msg = "\n";
+        Random random = new Random();
+        int[][] tmp = new int[6][6];
+        // Create
+        for (int i = 0; i < tmp.length; i++) {
+            for (int j = 0; j < 6; j++) {
+                tmp[i][j] = random.nextInt(10);
+            }
+        }
+        // Show
+        for (int i = 0; i < tmp.length; i++) { // filas numbers.length
+            for (int j = 0; j < tmp[0].length; j++) { // columnas numbers[0].length
+                msg += tmp[i][j] + " ";
+            }
+            msg += "\n";
+        }
+        // Generate Auto-id
+        msg += "Auto-id: ";
+        String subId1 = "";
+        String subId2 = "";
+        String subId3 = "";
+
+        boolean allSongs = true;
+        boolean allPodcast = true;
+
+        if (users.get(numberUser) instanceof Standard) {
+            for (int i = 0; i < ((Standard) users.get(numberUser)).getPlaylists().get(numberPlaylist).getAudios()
+                    .size(); i++) {
+
+                if (((Standard) users.get(numberUser)).getPlaylists().get(numberPlaylist).getAudios()
+                        .get(i) instanceof Song) {
+                    allPodcast = false;
+                } else if (((Standard) users.get(numberUser)).getPlaylists().get(numberPlaylist).getAudios()
+                        .get(i) instanceof Podcast) {
+                    allSongs = false;
+                }
+
+            }
+        } else if (users.get(numberUser) instanceof Premium) {
+            for (int i = 0; i < ((Premium) users.get(numberUser)).getPlaylist().get(numberPlaylist).getAudios()
+                    .size(); i++) {
+
+                if (((Premium) users.get(numberUser)).getPlaylist().get(numberPlaylist).getAudios()
+                        .get(i) instanceof Song) {
+                    allPodcast = false;
+                } else if (((Premium) users.get(numberUser)).getPlaylist().get(numberPlaylist).getAudios()
+                        .get(i) instanceof Podcast) {
+                    allSongs = false;
+                }
+            }
+        }
+
+        if (allSongs) {
+            for (int i = 0; i < tmp.length; i++) {
+                subId1 += "" + tmp[tmp.length - (i + 1)][0];
+                if (i > 0 && i < tmp.length - 1) {
+                    subId2 += "" + tmp[i][i];
+                }
+                subId3 += "" + tmp[tmp.length - (i + 1)][tmp.length - 1];
+            }
+            msg += subId1 + subId2 + subId3;
+        } else if (allPodcast) {
+
+            for (int i = 0; i < tmp[0].length - 4; i++) {
+                msg += tmp[0][i];
+            }
+
+            for (int i = 0; i < tmp.length; i++) {
+                for (int j = 1; j < tmp[0].length; j++) {
+                    if (j == (tmp.length / 2) - 1) {
+                        msg += tmp[i][j];
+                    }
+
+                }
+            }
+
+            for (int i = tmp.length - 1; i >= 0; i--) {
+                for (int j = 1; j < tmp[0].length; j++) {
+                    if (j == (tmp.length / 2)) {
+                        msg += tmp[i][j];
+                    }
+
+                }
+            }
+
+            for (int i = 4; i < tmp[0].length; i++) {
+                msg += tmp[0][i];
+            }
+        } else {
+
+            for (int i = tmp.length - 1; i >= 0; i--) {
+                for (int j = tmp[0].length - 1; j >= 0; j--) {
+
+                    if (i <= 5 && i >= 2) {
+                        if (i % 2 != 0 && j % 2 == 0) {
+                            msg += tmp[i][j];
+                        } else if (i % 2 == 0 && j % 2 != 0) {
+                            msg += tmp[i][j];
+                        }
+
+                    } else {
+                        if (i == 1 && j % 2 == 0 && j != 0) {
+                            msg += tmp[i][j];
+                        } else if (i == 0 && j % 2 != 0 && j != 1) {
+                            msg += tmp[i][j];
+                        }
+                    }
+
+                }
+            }
+        }
+
+        if (users.get(numberUser) instanceof Standard) {
+            ((Standard) users.get(numberUser)).getPlaylists().get(numberPlaylist).setAutoId(msg);
+        } else {
+            ((Premium) users.get(numberUser)).getPlaylist().get(numberPlaylist).setAutoId(msg);
+        }
+
+        return msg;
+    }
+
+    /**
+     * Description: Reproducer a Audio and your Ad if has
+     * 
+     * @param numberUser  The User that want reproducer a Audio
+     * @param numberAudio The Audio that will be play
+     * @return String of Playing
+     */
+    public String reproduceAudio(int numberUser, int numberAudio) {
+        String msg = "";
+        if (users.get(numberUser) instanceof Standard) {
+            // Ad
+            if (audios.get(numberAudio) instanceof Song) {
+                ((Standard) users.get(numberUser)).setListenedSong(1);
+                // Every two Song
+                if (((Consumer) users.get(numberUser)).getListenedSong() % 2 == 0) {
+                    msg += "\n" + Ad.values()[0].reproducer();
+                }
+            } else {
+                // Always
+                msg += "\n" + Ad.values()[0].reproducer();
+                ((Standard) users.get(numberUser)).setListenedPodcast(1);
+            }
+        } else {
+            // No Ad
+            if (audios.get(numberAudio) instanceof Song) {
+                ((Premium) users.get(numberUser)).setListenedSong(1);
+            } else {
+                ((Premium) users.get(numberUser)).setListenedPodcast(1);
+            }
+        }
+        audios.get(numberAudio).setNumberReproduction(1);
+        msg += "\n\n" + audios.get(numberAudio).reproducer();
+        return msg;
+    }
+
+    /**
+     * Description: The User selected buy a song selected
+     * 
+     * @param numberUser The User that want reproducer a Audio
+     * @param numberSong The Song that will be buy
+     * @return boolean
+     */
+    public boolean buySong(int numberUser, int numberSong) {
+        Invoice newInvoice = new Invoice((Song) audios.get(numberSong));
+        if (users.get(numberUser) instanceof Standard) {
+            if (((Standard) users.get(numberUser)).getInvoices().size() < 101) {
+                ((Song) audios.get(numberSong)).setAmountSale(1);
+                return ((Standard) users.get(numberUser)).addInvoice(newInvoice);
+            } else {
+                return false;
+            }
+        } else {
+            ((Song) audios.get(numberSong)).setAmountSale(1);
+            return ((Premium) users.get(numberUser)).addInvoice(newInvoice);
+        }
+    }
+
+    /**
+     * Description: Show a report requested
+     * 
+     * @return String The report
+     */
+    public String totalReproductions() {
+        String msg = "";
+        int totalSongs = 0;
+        int totalPodcast = 0;
+        for (Audio audio : audios) {
+            if (audio instanceof Song) {
+                totalSongs += audio.getNumberReproduction();
+            } else {
+                totalPodcast += audio.getNumberReproduction();
+            }
+        }
+        msg += "\n Total Reproduction Song: " + totalSongs + "\n Total Reproduction Podcast: " + totalPodcast
+                + "\n Total: " + (totalPodcast + totalSongs);
+        return msg;
+    }
+
+    /**
+     * Description: Show a report requested
+     * 
+     * @return String The report
+     */
+    public String genreSong() {
+        String msg = "";
+        int[] typeGenre = new int[] { 0, 0, 0, 0 };
+        for (Audio audio : audios) {
+            if (audio instanceof Song) {
+                if (((Song) audio).getTypeGenre() == TypeGenre.ROCK) {
+                    typeGenre[0] += audio.getNumberReproduction();
+                } else if (((Song) audio).getTypeGenre() == TypeGenre.POP) {
+                    typeGenre[1] += audio.getNumberReproduction();
+                } else if (((Song) audio).getTypeGenre() == TypeGenre.TRAP) {
+                    typeGenre[2] += audio.getNumberReproduction();
+                } else if (((Song) audio).getTypeGenre() == TypeGenre.HOUSE) {
+                    typeGenre[3] += audio.getNumberReproduction();
+                }
+            }
+        }
+        int max = -1;
+        int position = -1;
+        for (int i : typeGenre) {
+            if (i > max) {
+                max = i;
+            }
+        }
+        int contador = -1;
+        for (int i : typeGenre) {
+            contador += 1;
+            if (max == i) {
+                position = contador;
+            }
+        }
+        msg += "\n The Genre most listened is " + TypeGenre.values()[position] + " with " + typeGenre[position]
+                + " reproductions";
+        return msg;
+    }
+
+    /**
+     * Description: Show a report requested
+     * 
+     * @return String The report
+     */
+    public String categoryPodcast() {
+        String msg = "";
+        int[] typePodcast = new int[] { 0, 0, 0, 0 };
+        for (Audio audio : audios) {
+            if (audio instanceof Podcast) {
+                if (((Podcast) audio).getTypeCategory() == TypeCategory.POLITIC) {
+                    typePodcast[0] += audio.getNumberReproduction();
+                } else if (((Podcast) audio).getTypeCategory() == TypeCategory.ENTERTAINMENT) {
+                    typePodcast[1] += audio.getNumberReproduction();
+                } else if (((Podcast) audio).getTypeCategory() == TypeCategory.VIDEOGAME) {
+                    typePodcast[2] += audio.getNumberReproduction();
+                } else if (((Podcast) audio).getTypeCategory() == TypeCategory.FASHION) {
+                    typePodcast[3] += audio.getNumberReproduction();
+                }
+            }
+        }
+        int max = -1;
+        int position = -1;
+        for (int i : typePodcast) {
+            if (i > max) {
+                max = i;
+            }
+        }
+        int contador = -1;
+        for (int i : typePodcast) {
+            contador += 1;
+            if (max == i) {
+                position = contador;
+            }
+        }
+        msg += "\n The Category most listened is " + TypeCategory.values()[position] + " with " + typePodcast[position]
+                + " reproductions";
+        return msg;
+    }
+
+    /**
+     * Description: Show the Song most buiest
+     * 
+     * @return String The report
+     */
+    public String top5() {
+        return "En proceso...";
+    }
+
+    /**
+     * Description: Show the Song most buiest
+     * 
+     * @return String The report
+     */
+    public String top10() {
+        return "En proceso...";
+    }
+
+    /**
+     * Description: Show the Song most buiest
+     * 
+     * @return String The report
+     */
+    public String boughtGenreSong() {
+
+        String msg = "";
+        int[] typeGenreSales = new int[] { 0, 0, 0, 0 };
+        int[] typeGenreTotal = new int[] { 0, 0, 0, 0 };
+        for (Audio audio : audios) {
+            if (audio instanceof Song) {
+                if (((Song) audio).getTypeGenre() == TypeGenre.ROCK) {
+                    typeGenreSales[0] += ((Song) audio).getAmountSale();
+                    typeGenreTotal[0] += ((Song) audio).getSaleValue() * ((Song) audio).getAmountSale();
+                } else if (((Song) audio).getTypeGenre() == TypeGenre.POP) {
+                    typeGenreSales[1] += ((Song) audio).getAmountSale();
+                    typeGenreTotal[1] += ((Song) audio).getSaleValue() * ((Song) audio).getAmountSale();
+                } else if (((Song) audio).getTypeGenre() == TypeGenre.TRAP) {
+                    typeGenreSales[2] += ((Song) audio).getAmountSale();
+                    typeGenreTotal[2] += ((Song) audio).getSaleValue() * ((Song) audio).getAmountSale();
+                } else if (((Song) audio).getTypeGenre() == TypeGenre.HOUSE) {
+                    typeGenreSales[3] += ((Song) audio).getAmountSale();
+                    typeGenreTotal[3] += ((Song) audio).getSaleValue() * ((Song) audio).getAmountSale();
+                }
+            }
+        }
+        for (int i = 0; i < typeGenreSales.length; i++) {
+            msg += "\n Type Genre " + TypeGenre.values()[i] + ", " + typeGenreSales[i]
+                    + " amount sales and a value total of " + typeGenreTotal[i];
+        }
+        return msg;
+    }
+
+    /**
+     * Description: Show the Song most buiest
+     * 
+     * @return String The report
+     */
+    public String songMostbuiest() {
+        String msg = "";
+
+        Audio mostBuiest = null;
+        int max = -1;
+
+        for (Audio audio : audios) {
+            if (audio instanceof Song) {
+                if (((Song) audio).getAmountSale() > max) {
+                    mostBuiest = audio;
+                    max = ((Song) audio).getAmountSale();
+                }
+            }
+        }
+        if (mostBuiest != null) {
+            msg += "\nThe Song most buiest is " + mostBuiest.getName() + " with "
+                    + ((Song) mostBuiest).getAmountSale() + " shopping and a value total of "
+                    + ((Song) mostBuiest).getAmountSale() * ((Song) mostBuiest).getSaleValue();
+        } else {
+            msg += "\n There is/are Songs registered";
+        }
+
+        return msg;
     }
 }

@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Audio {
+public abstract class Audio implements Playable {
     
     private String name;
     private String url;
@@ -43,6 +43,6 @@ public abstract class Audio {
     }
 
     public void setNumberReproduction(int numberReproduction) {
-        this.numberReproduction = numberReproduction;
+        this.numberReproduction += numberReproduction;
     }
 }

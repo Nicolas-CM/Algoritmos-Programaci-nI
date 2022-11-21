@@ -1,13 +1,10 @@
 package model;
 
-import java.time.LocalDate;
-
 public class Song extends Audio {
 
     private String album;
     private double saleValue;
     private int amountSale;
-    private LocalDate buyDate;
     private TypeGenre typeGenre;
 
     public Song(String name, String url, int duration, String album, double saleValue, int typeGenre) {
@@ -15,7 +12,6 @@ public class Song extends Audio {
         this.album = album;
         this.saleValue = saleValue;
         this.amountSale = 0;
-        this.buyDate = null;
         this.typeGenre = TypeGenre.values()[typeGenre];
     }
 
@@ -40,15 +36,7 @@ public class Song extends Audio {
     }
 
     public void setAmountSale(int amountSale) {
-        this.amountSale = amountSale;
-    }
-
-    public LocalDate getBuyDate() {
-        return buyDate;
-    }
-
-    public void setBuyDate(LocalDate buyDate) {
-        this.buyDate = buyDate;
+        this.amountSale += amountSale;
     }
 
     public TypeGenre getTypeGenre() {
@@ -57,6 +45,15 @@ public class Song extends Audio {
 
     public void setTypeGenre(TypeGenre typeGenre) {
         this.typeGenre = typeGenre;
+    }
+
+    /* 
+    * Description: Allows Reproducer
+    */
+    @Override
+    public String reproducer() {
+        // TODO Auto-generated method stub
+        return "Playing the Song " + this.getName();
     }
 
 }

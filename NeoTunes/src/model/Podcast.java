@@ -27,4 +27,13 @@ public class Podcast extends Audio {
         this.typeCategory = typeCategory;
     }
 
+    /* 
+    * Description: Allows Reproducer
+     */
+    @Override
+    public String reproducer() {
+        // TODO Auto-generated method stub
+        return "Playing the Podcast " + this.getName();
+    }
+
 }

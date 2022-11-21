@@ -2,6 +2,8 @@ package model;
 
 public abstract class Consumer extends User{
     
+    private int listenedSong;
+    private int listenedPodcast;
     private int reproductionTime;
     private int[] mostListenedGenre;
     private int[] mostListenedArtist;
@@ -10,11 +12,29 @@ public abstract class Consumer extends User{
     public Consumer(String nickName, String id) {
         super(nickName, id);
         this.reproductionTime = 0;
+        this.listenedPodcast = 0;
+        this.listenedSong = 0;
         this.mostListenedGenre = new int[4];
         this.mostListenedArtist = new int[15];
         this.mostListenedCreator = new int[15];
     }
 
+    public int getListenedPodcast() {
+        return listenedPodcast;
+    }
+
+    public void setListenedPodcast(int listenedPodcast) {
+        this.listenedPodcast += listenedPodcast;
+    }
+
+    public int getListenedSong() {
+        return listenedSong;
+    }
+
+    public void setListenedSong(int listenedSong) {
+        this.listenedSong += listenedSong;
+    }
+    
     public int getReproductionTime() {
         return reproductionTime;
     }

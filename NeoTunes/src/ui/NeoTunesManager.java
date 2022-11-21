@@ -18,7 +18,7 @@ public class NeoTunesManager {
         neoTunes.hello();
         neoTunes.mainMenu();
         neoTunes.bye();
-
+        //Nicolas Cuellar Molina - A00394970 (Falto la d y la e del requerimiento 9 :( -"Sorry"-)
     }
 
     public NeoTunesManager() {
@@ -50,7 +50,8 @@ public class NeoTunesManager {
             System.out.println(
                     "\n----------\nMain Menu\n---------- Choose a option:\n 0) Exit of program\n 1) Register a User Producer (Artist or Creator)"
                             + "\n 2) Register a User Consumer (Standard or Premium)\n 3) Register a song\n 4) Register a Podcast\n 5) Create a Playlist"
-                            + "\n 6) Edit Playlist " + "\n-------------------");
+                            + "\n 6) Edit Playlist\n 7) Share Playlist\n 8) Reproducer Audio \n 9) Buy a song\n 10) Generate reports"
+                            + "\n-------------------");
             optionMenu = input.nextInt();
             switch (optionMenu) {
                 case 0:
@@ -73,37 +74,191 @@ public class NeoTunesManager {
                     break;
                 case 6:
                     editPlaylist();
-                    break;/*
-                           * case 7:
-                           * // increaseLevelPlayer();
-                           * break;
-                           * case 8:
-                           * // showLevelInfo();
-                           * break;
-                           * case 9:
-                           * // showQuantityDiamonds();
-                           * break;
-                           * case 10:
-                           * // showQuantityEnemies();
-                           * break;
-                           * case 11:
-                           * // showMostRepeatedTreasure();
-                           * break;
-                           * case 12:
-                           * // showHighestEnemy();
-                           * break;
-                           * case 13:
-                           * // showQuantityConsonantsEnemies();
-                           * break;
-                           * case 14:
-                           * // showTop5True();
-                           * break;
-                           */
+                    break;
+                case 7:
+                    sharePlaylist();
+                    break;
+                case 8:
+                    reproducerAudio();
+                    break;
+                case 9:
+                    buySong();
+                    break;
+                case 10:
+                    generateReport();
+                    break;
+
                 default:
                     System.out.println("------------------\nValue incorrect!!!");
                     break;
             }
         } while (exit == false);
+    }
+
+    /**
+     * Description: Allows select the option of the report menu
+     */
+    public void generateReport() {
+        int optionMenu = 0;
+        boolean exit = false;
+        do {
+            System.out.println(
+                    "\n----------\nReport Menu\n---------- Choose a option:\n 0) Exit of report menu\n 1) Number of reproduction of Song and Podcast"
+                            + "\n 2) The Genre most listenest\n 3) The Category most listenest\n 4) The Top 5 of Artist and Creator\n 5) The Top 10 of Songs and Podcasts"
+                            + "\n 6) Songs bought of each genre\n 7) Song most buiest"
+                            + "\n-------------------");
+            optionMenu = input.nextInt();
+            switch (optionMenu) {
+                case 0:
+                    exit = true;
+                    break;
+                case 1:
+                    System.out.println(controller.totalReproductions());
+                    break;
+                case 2:
+                    System.out.println(controller.genreSong());
+                    break;
+                case 3:
+                    System.out.println(controller.categoryPodcast());
+                    break;
+                case 4:
+                    System.out.println(controller.top5());
+                    break;
+                case 5:
+                    System.out.println(controller.top10());
+                    break;
+                case 6:
+                    System.out.println(controller.boughtGenreSong());
+                    break;
+                case 7:
+                    System.out.println(controller.songMostbuiest());
+                    break;
+                default:
+                    System.out.println("------------------\nValue incorrect!!!");
+                    break;
+            }
+        } while (exit == false);
+    }
+
+    /**
+     * Description: Allows buy a Song
+     */
+    public void buySong() {
+        if (controller.showNickName(1).equals("") && controller.showNickName(2).equals("")) {
+            System.out.println("First must register a Standard or a Premium!!! -------------------");
+        } else {
+            int numberUser = -1;
+            System.out.println("This user consumer is Standard (0) or Premium (1)");
+            boolean option = trueOrFalse("Standard", "Premium");
+            if (option) {
+                if (controller.showNickName(2).equals("")) {
+                    System.out.println("First must register a Premium!!! -------------------");
+                } else {
+                    numberUser = selectStandardOrPremiumOrArtistOrCreator("Premium", 2);
+                }
+            } else {
+                if (controller.showNickName(1).equals("")) {
+                    System.out.println("First must register a Standard!!! -------------------");
+                } else {
+                    numberUser = selectStandardOrPremiumOrArtistOrCreator("standard", 1);
+                }
+            }
+            if (numberUser != -1) {
+
+                if (controller.showNameAudio(1).equals("")) {
+                    System.out.println("First must created a Song");
+                } else {
+                    int numberSong = selectAudio(1);
+                    if (controller.buySong(numberUser, numberSong)) {
+                        System.out.println("The process was correct----------");
+                    } else {
+                        System.out.println("The process can't be finished----------");
+                    }
+                }
+
+            } else {
+                System.out.println("The process can't be finished----------");
+            }
+        }
+    }
+
+    /**
+     * Description: Allows reproducer a Audio selected by a User selected
+     */
+    public void reproducerAudio() {
+
+        if (controller.showNickName(1).equals("") && controller.showNickName(2).equals("")) {
+            System.out.println("First must register a Standard or a Premium!!! -------------------");
+        } else {
+            int numberUser = -1;
+            System.out.println("This user consumer is Standard (0) or Premium (1)");
+            boolean option = trueOrFalse("Standard", "Premium");
+            if (option) {
+                if (controller.showNickName(2).equals("")) {
+                    System.out.println("First must register a Premium!!! -------------------");
+                } else {
+                    numberUser = selectStandardOrPremiumOrArtistOrCreator("Premium", 2);
+                }
+            } else {
+                if (controller.showNickName(1).equals("")) {
+                    System.out.println("First must register a Standard!!! -------------------");
+                } else {
+                    numberUser = selectStandardOrPremiumOrArtistOrCreator("standard", 1);
+                }
+            }
+            if (numberUser != -1) {
+
+                if (controller.showNameAudio(0).equals("")) {
+                    System.out.println("First must created a Audio");
+                } else {
+                    int numberAudio = selectAudio(0);
+                    System.out.println(controller.reproduceAudio(numberUser, numberAudio));
+                }
+
+            } else {
+                System.out.println("The process can't be finished----------");
+            }
+        }
+    }
+
+    /**
+     * Description: Allows share the Auto-id of a Playlist selected
+     */
+    public void sharePlaylist() {
+
+        if (controller.showNickName(1).equals("") && controller.showNickName(2).equals("")) {
+            System.out.println("First must register a Standard or a Premium!!! -------------------");
+        } else {
+            int numberUser = -1;
+            System.out.println("This user consumer is Standard (0) or Premium (1)");
+            boolean option = trueOrFalse("Standard", "Premium");
+            if (option) {
+                if (controller.showNickName(2).equals("")) {
+                    System.out.println("First must register a Premium!!! -------------------");
+                } else {
+                    numberUser = selectStandardOrPremiumOrArtistOrCreator("Premium", 2);
+                }
+            } else {
+                if (controller.showNickName(1).equals("")) {
+                    System.out.println("First must register a Standard!!! -------------------");
+                } else {
+                    numberUser = selectStandardOrPremiumOrArtistOrCreator("standard", 1);
+                }
+            }
+            if (numberUser != -1) {
+                // Process of share with auto-id
+                if (controller.showNamePlaylist(numberUser).equals("")) {
+                    System.out.println("First must created a Playlist");
+                } else {
+
+                    int numberPlaylist = selectPlaylist(numberUser);
+                    System.out.println(controller.sharePlaylist(numberUser, numberPlaylist));
+                }
+            } else {
+                System.out.println("The process can't be finished----------");
+            }
+        }
+
     }
 
     /**
@@ -185,7 +340,7 @@ public class NeoTunesManager {
         if (controller.showNameAudio(0).equals("")) {
             System.out.println("First must created a Audio");
         } else {
-            int numberAudio = selectAudio();
+            int numberAudio = selectAudio(0);
             if (controller.addAudioToPlaylist(numberUser, numberPlaylist, numberAudio)) {
                 System.out.println("The process was correct----------");
             } else {
@@ -355,10 +510,11 @@ public class NeoTunesManager {
     /**
      * Description: Allows select a Audio registered
      * 
+     * @param songOrPodcast int the Song (1) or Podcast (2) or All (0)
      * @return int The index of Audio selected
      */
-    public int selectAudio() {
-        System.out.println(controller.showNameAudio(0));
+    public int selectAudio(int songOrPodcast) {
+        System.out.println(controller.showNameAudio(songOrPodcast));
         System.out.println("Enter the Audio index: ");
         int numberAudio = input.nextInt();
         return numberAudio;
@@ -372,7 +528,7 @@ public class NeoTunesManager {
      */
     public int selectPlaylist(int numberUser) {
         System.out.println(controller.showNamePlaylist(numberUser));
-        System.out.println("Enter the Playlist index for edit");
+        System.out.println("Enter the Playlist index for continue");
         int numberPlaylist = input.nextInt();
         return numberPlaylist;
     }
@@ -391,7 +547,7 @@ public class NeoTunesManager {
     public int selectStandardOrPremiumOrArtistOrCreator(String aOrC, int standardOrPremiumOrArtistOrCreator) {
         int numberUser = 0;
         System.out.println(controller.showNickName(standardOrPremiumOrArtistOrCreator));
-        System.out.println("\nEnter the " + aOrC + " nickName that will create the song-----------------");
+        System.out.println("\nEnter the " + aOrC + " nickName -----------------");
         boolean exit = false;
         input.nextLine();
         String nickName = "";
